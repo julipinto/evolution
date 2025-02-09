@@ -9,8 +9,8 @@ defmodule Evolution.Repositories.User.Schemas.User do
 
   alias Evolution.Repositories.Helpers.Changeset
 
-  @fields ~w(name email birthdate password_hash)a
-  @required_fields ~w(name email birthdate password_hash)a
+  @fields ~w(name last_name email birthdate password_hash)a
+  @required_fields ~w(name email birthdate)a
 
   schema "users" do
     field :name, :string
@@ -24,7 +24,7 @@ defmodule Evolution.Repositories.User.Schemas.User do
   end
 
   @doc false
-  def changeset(user, attrs) do
+  def changeset(user \\ %__MODULE__{}, attrs) do
     user
     |> cast(attrs, @fields)
     |> validate_required(@required_fields)

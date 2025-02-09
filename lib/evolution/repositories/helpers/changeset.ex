@@ -44,14 +44,16 @@ defmodule Evolution.Repositories.Helpers.Changeset do
       %Ecto.Changeset{}
 
   """
+  def password_changeset(changeset, key \\ :password)
+
   def password_changeset(
         %Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset,
-        key \\ :password_hash
+        key
       )
       when password != nil do
     password_hash = Crypt.hash(password)
     Map.put_new(changeset.changes, key, password_hash)
   end
 
-  def password_changeset(changeset, _key_from, _key_to), do: changeset
+  def password_changeset(changeset, _key), do: changeset
 end
