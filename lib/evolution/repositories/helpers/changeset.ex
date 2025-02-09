@@ -20,11 +20,11 @@ defmodule Evolution.Repositories.Helpers.Changeset do
 
   ## Examples
 
-      iex> validate_email(%Ecto.Changeset{}, :email)
+      iex> email_changeset(%Ecto.Changeset{}, :email)
       %Ecto.Changeset{}
 
   """
-  @spec validate_email(Ecto.Changeset.t(), atom()) :: Ecto.Changeset.t()
+  @spec email_changeset(Ecto.Changeset.t(), atom()) :: Ecto.Changeset.t()
   def email_changeset(changeset, key \\ :email) do
     changeset
     |> validate_length(key,
@@ -45,13 +45,12 @@ defmodule Evolution.Repositories.Helpers.Changeset do
 
   """
   def password_changeset(
-        %Changeset{valid?: true, changes: %{password: password}} = changeset,
-        key_from \\ :password,
-        key_to \\ :password_hash
+        %Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset,
+        key \\ :password_hash
       )
       when password != nil do
     password_hash = Crypt.hash(password)
-    change(changeset, key_to, password_hash)
+    Map.put_new(changeset.changes, key, password_hash)
   end
 
   def password_changeset(changeset, _key_from, _key_to), do: changeset
