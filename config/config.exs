@@ -11,7 +11,7 @@ config :evolution,
   ecto_repos: [Evolution.Repo],
   generators: [timestamp_type: :utc_datetime]
 
-config :evolution, Evolution.Repo, database: "evolution_#{Mix.env()}"
+config :evolution, Evolution.Repo, database: "priv/repo/db/evolution_#{Mix.env()}.db"
 
 # Configures the endpoint
 config :evolution, EvolutionWeb.Endpoint,
