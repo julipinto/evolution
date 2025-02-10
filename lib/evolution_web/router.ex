@@ -9,6 +9,12 @@ defmodule EvolutionWeb.Router do
     pipe_through :api
   end
 
+  scope "/measurements", EvolutionWeb do
+    pipe_through :browser
+
+    resources "/skin_folds", SkinFoldController, only: [:create]
+  end
+
   # Enable LiveDashboard in development
   if Application.compile_env(:evolution, :dev_routes) do
     # If you want to use the LiveDashboard in production, you should put
