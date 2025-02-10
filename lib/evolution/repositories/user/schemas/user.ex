@@ -9,8 +9,8 @@ defmodule Evolution.Repositories.User.Schemas.User do
 
   alias Evolution.Repositories.Helpers.Changeset
 
-  @fields ~w(name last_name email birthdate password_hash)a
-  @required_fields ~w(name email birthdate)a
+  @fields ~w(name last_name email birthdate password_hash gender)a
+  @required_fields ~w(name email gender birthdate)a
 
   schema "users" do
     field :name, :string
@@ -19,6 +19,7 @@ defmodule Evolution.Repositories.User.Schemas.User do
     field :password, :string, virtual: true
     field :password_hash, :string
     field :birthdate, :date
+    field :gender, Ecto.Enum, values: [:male, :female]
 
     timestamps()
   end

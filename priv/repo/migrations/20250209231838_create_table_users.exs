@@ -8,6 +8,7 @@ defmodule Evolution.Repo.Migrations.CreateTableUsers do
       add :email, :string
       add :password_hash, :string
       add :birthdate, :date
+      add :gender, :string
 
       timestamps()
     end
