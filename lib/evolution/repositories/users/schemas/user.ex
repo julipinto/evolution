@@ -1,4 +1,4 @@
-defmodule Evolution.Repositories.User.Schemas.User do
+defmodule Evolution.Repositories.User do
   @moduledoc """
   User schema.
   """

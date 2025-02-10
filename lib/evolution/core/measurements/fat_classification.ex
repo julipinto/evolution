@@ -126,7 +126,7 @@ defmodule Evolution.Core.Measurements.FatClassification do
   ## Parameters:
     - gender: :male or :female
     - age: age in years
-    - body_fat_percentage: body fat percentage
+    - fat_percentage: body fat percentage
 
   ## Returns:
     - A string indicating the classification (e.g., "excellent", "good", etc.)
@@ -134,14 +134,14 @@ defmodule Evolution.Core.Measurements.FatClassification do
 
   ## Examples:
 
-      iex> BodyComposition.classify_body_fat_percentage(:male, 30, 12)
+      iex> BodyComposition.classify_fat_percentage(:male, 30, 12)
       "good"
 
-      iex> BodyComposition.classify_body_fat_percentage(:female, 40, 25)
+      iex> BodyComposition.classify_fat_percentage(:female, 40, 25)
       "moderately_high"
 
   """
-  def classify(gender, age, body_fat_percentage) do
+  def classify(gender, age, fat_percentage) do
     gender
     |> Map.get(@classification_tables, [])
     |> Enum.find(fn table -> age in table.age_range end)
@@ -152,7 +152,7 @@ defmodule Evolution.Core.Measurements.FatClassification do
       table ->
         table.classifications
         |> Enum.find_value("Out of standards", fn {classification, range} ->
-          if body_fat_percentage in range, do: Atom.to_string(classification)
+          if fat_percentage in range, do: Atom.to_string(classification)
         end)
     end
   end
