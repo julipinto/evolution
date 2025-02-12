@@ -5,7 +5,7 @@ defmodule Evolution.Repositories.Helpers.Changeset do
 
   import Ecto.Changeset
 
-  alias Evolution.Repositories.Helpers.Crypt
+  alias Evolution.Core.Crypt
 
   @email_regex ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
 

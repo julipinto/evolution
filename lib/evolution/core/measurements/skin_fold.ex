@@ -88,14 +88,17 @@ defmodule Evolution.Core.Measurements.SkinFold do
   #   _pass
   # end
 
-  def sum_folds(%{
-    triceps_fold: triceps_fold,
-    biceps_fold: biceps_fold,
-    abdominal_fold: abdominal_fold,
-    subscapular_fold: subscapular_fold,
-    thigh_fold: thigh_fold,
-    suprailiac_fold: suprailiac_fold
-  }, "3") do
+  def sum_folds(
+        %{
+          triceps_fold: triceps_fold,
+          biceps_fold: biceps_fold,
+          abdominal_fold: abdominal_fold,
+          subscapular_fold: subscapular_fold,
+          thigh_fold: thigh_fold,
+          suprailiac_fold: suprailiac_fold
+        },
+        "3"
+      ) do
     triceps_fold + biceps_fold + abdominal_fold + subscapular_fold + thigh_fold + suprailiac_fold
   end
 

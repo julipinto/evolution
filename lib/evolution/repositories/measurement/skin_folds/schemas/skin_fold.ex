@@ -39,7 +39,7 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
 
   schema "skin_folds" do
     field :weight, :float
-    
+
     field :triceps_fold, :float
     field :biceps_fold, :float
     field :abdominal_fold, :float

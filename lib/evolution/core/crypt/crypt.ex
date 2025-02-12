@@ -1,4 +1,4 @@
-defmodule Evolution.Repositories.Helpers.Crypt do
+defmodule Evolution.Core.Crypt do
   @moduledoc """
   Crypt helper functions.
   """

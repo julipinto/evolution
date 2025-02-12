@@ -1,17 +1,22 @@
 defmodule EvolutionWeb.Router do
   use EvolutionWeb, :router
 
+  alias EvolutionWeb.Plugs.Auth
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/api", EvolutionWeb do
+  pipeline :auth do
+    plug Auth
+  end
+
+  scope "/", EvolutionWeb do
     pipe_through :api
   end
 
   scope "/measurements", EvolutionWeb do
-    pipe_through :browser
-
+    pipe_through :auth
     resources "/skin_folds", SkinFoldController, only: [:create]
   end
 
