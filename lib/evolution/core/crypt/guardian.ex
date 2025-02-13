@@ -14,6 +14,9 @@ defmodule Evolution.Core.Guardian do
   def subject_for_token(_, _claims), do: {:error, "Invalid subject"}
 
   def resource_from_claims(%{"sub" => id}) do
+    IO.inspect("Subject for claims: #{id}")
+    IO.inspect(Store.get_by_id(id), label: "Resource from claims")
+
     case Store.get_by_id(id) do
       nil -> {:error, "Invalid resource"}
       resource -> {:ok, resource}
