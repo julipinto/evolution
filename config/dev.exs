@@ -58,3 +58,7 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :evolution, Evolution.Core.Guardian,
+  issuer: "evolution",
+  secret_key: "evolution_secret_key"

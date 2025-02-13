@@ -2,8 +2,10 @@ defmodule EvolutionWeb.Plugs.Auth do
   @moduledoc """
   Auth plug
   """
+  alias Evolution.Core.Guardian
 
   import Plug.Conn
+  
 
   def init(opts), do: opts
 
@@ -15,8 +17,8 @@ defmodule EvolutionWeb.Plugs.Auth do
 
   defp get_connection_token(conn) do
     with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
-         {:ok, claims} <- Evolution.Guardian.decode_and_verify(token),
-         {:ok, user} <- Evolution.Guardian.resource_from_claims(claims) do
+         {:ok, claims} <- Guardian.decode_and_verify(token),
+         {:ok, user} <- Guardian.resource_from_claims(claims) do
       {:ok, user}
     else
       _ -> {:error, :unauthorized}

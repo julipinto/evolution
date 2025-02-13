@@ -1,4 +1,4 @@
-defmodule EvolutionWeb.Controller.AuthController do
+defmodule EvolutionWeb.Controllers.AuthController do
   use EvolutionWeb, :controller
 
   alias Evolution.Core.Users.Auth

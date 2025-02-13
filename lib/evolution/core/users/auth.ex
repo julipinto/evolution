@@ -2,8 +2,8 @@ defmodule Evolution.Core.Users.Auth do
   @moduledoc """
   User authentication functions.
   """
-  alias Evolution.Core.Guardian
   alias Evolution.Core.Crypt
+  alias Evolution.Core.Guardian
   alias Evolution.Repositories.User.Store
 
   @ttl {30, :days}
@@ -25,8 +25,7 @@ defmodule Evolution.Core.Users.Auth do
   end
 
   def sign_in(user_id) do
-    IO.inspect("Signing in user with id: #{user_id}")
-    with {:ok, token, _claims} <- Guardian.encode_and_sign(%{id: user_id}, ttl: @ttl) do
+    with {:ok, token, _claims} <- Guardian.encode_and_sign(%{id: user_id}, %{}, ttl: {20, :days}) do
       {:ok, token}
     end
   end

@@ -15,11 +15,11 @@ defmodule EvolutionWeb.Router do
     pipe_through :api
   end
 
-  scope "/", EvolutionWeb.Controller do
+  scope "/", EvolutionWeb.Controllers do
     resources "/auth", AuthController, only: [:create]
   end
 
-  scope "/measurements", EvolutionWeb.Controller do
+  scope "/measurements", EvolutionWeb.Controllers do
     pipe_through :auth
     # resources "/auth", AuthController, only: [:create]
     # resources "/skin_folds", SkinFoldController, only: [:create]

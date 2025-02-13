@@ -4,8 +4,8 @@ defmodule EvolutionWeb.Controllers.SkinFoldController do
   """
   use EvolutionWeb, :controller
 
-  alias Evolution.Contexts.Measurements
-  alias Evolution.Contexts.Measurements.Input
+  # alias Evolution.Contexts.Measurements
+  # alias Evolution.Contexts.Measurements.Input
 
   # def create(conn, attrs) do
   #   user = conn.assigns.current_user
