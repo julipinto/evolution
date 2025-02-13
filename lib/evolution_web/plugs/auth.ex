@@ -8,17 +8,18 @@ defmodule EvolutionWeb.Plugs.Auth do
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    with {:ok, token} <- get_connection_token(conn) do
-      conn
-      |> assign(:current_user, token)
+    with {:ok, user} <- get_connection_token(conn) do
+      assign(conn, :current_user, user)
     end
   end
 
   defp get_connection_token(conn) do
-    with ["Bearer " <> token] <- get_req_header(conn, "authorization") do
-      {:ok, token}
+    with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
+         {:ok, claims} <- Evolution.Guardian.decode_and_verify(token),
+         {:ok, user} <- Evolution.Guardian.resource_from_claims(claims) do
+      {:ok, user}
     else
-      _ -> {:error, "unauthorized"}
+      _ -> {:error, :unauthorized}
     end
   end
 end

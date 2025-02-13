@@ -15,9 +15,14 @@ defmodule EvolutionWeb.Router do
     pipe_through :api
   end
 
-  scope "/measurements", EvolutionWeb do
+  scope "/", EvolutionWeb.Controller do
+    resources "/auth", AuthController, only: [:create]
+  end
+
+  scope "/measurements", EvolutionWeb.Controller do
     pipe_through :auth
-    resources "/skin_folds", SkinFoldController, only: [:create]
+    # resources "/auth", AuthController, only: [:create]
+    # resources "/skin_folds", SkinFoldController, only: [:create]
   end
 
   # Enable LiveDashboard in development

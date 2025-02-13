@@ -35,3 +35,10 @@ config :phoenix, :json_library, Jason
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
+
+guardian_secret_key =
+  System.get_env("GUARDIAN_SECRET_KEY") || raise "GUARDIAN_SECRET_KEY is missing"
+
+config :evolution, Evolution.Guardian,
+  issuer: "evolution",
+  secret_key: guardian_secret_key

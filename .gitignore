@@ -26,3 +26,5 @@ erl_crash.dump
 evolution-*.tar
 
 priv/repo/db/*
+
+.env

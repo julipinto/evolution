@@ -1,4 +1,4 @@
-defmodule EvolutionWeb.Controllers.SkinFold do
+defmodule EvolutionWeb.Controllers.SkinFoldController do
   @moduledoc """
   SkinFold controller
   """
@@ -7,10 +7,10 @@ defmodule EvolutionWeb.Controllers.SkinFold do
   alias Evolution.Contexts.Measurements
   alias Evolution.Contexts.Measurements.Input
 
-  def create(conn, attrs) do
-    user = conn.assigns.current_user
-    attrs = Map.merge(skin_fold_params, %{"user_id" => user.id})
-    input = %Input{attrs}
+  # def create(conn, attrs) do
+  #   user = conn.assigns.current_user
+  #   attrs = Map.merge(skin_fold_params, %{"user_id" => user.id})
+    # input = %Input{attrs}
 
     #   case Measurements.register_skin_fold(user, input) do
     #     {:ok, _} ->
@@ -22,6 +22,6 @@ defmodule EvolutionWeb.Controllers.SkinFold do
     #       conn
     #       |> put_flash(:error, "Error registering skin fold measurement")
     #       |> render("new.html", changeset: changeset)
-    #   end
-  end
+    #   endGuardian
+  # end
 end
