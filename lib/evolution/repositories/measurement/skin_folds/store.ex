@@ -31,4 +31,12 @@ defmodule Evolution.Repositories.Measurement.SkinFolds.Store do
     )
     |> Repo.one()
   end
+
+  def list_by_user(user_id) do
+    from(skin_fold in SkinFold,
+      where: skin_fold.user_id == ^user_id,
+      order_by: [desc: skin_fold.measured_at]
+    )
+    |> Repo.all()
+  end
 end

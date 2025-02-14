@@ -4,7 +4,7 @@ defmodule EvolutionWeb.Router do
   alias EvolutionWeb.Plugs.Auth
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ~w(json)
   end
 
   pipeline :auth do
@@ -19,10 +19,11 @@ defmodule EvolutionWeb.Router do
     resources "/auth", AuthController, only: [:create]
   end
 
-  scope "/measurements", EvolutionWeb.Controllers do
+  scope "/measurements", EvolutionWeb do
+    pipe_through :api
     pipe_through :auth
-    # resources "/auth", AuthController, only: [:create]
-    # resources "/skin_folds", SkinFoldController, only: [:create]
+
+    resources "/skin_folds", SkinFoldController, only: [:index, :create]
   end
 
   # Enable LiveDashboard in development

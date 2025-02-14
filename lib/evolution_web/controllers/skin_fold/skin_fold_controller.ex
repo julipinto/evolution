@@ -1,11 +1,23 @@
-defmodule EvolutionWeb.Controllers.SkinFoldController do
+# defmodule EvolutionWeb.Controllers.SkinFoldController do
+defmodule EvolutionWeb.SkinFoldController do
   @moduledoc """
   SkinFold controller
   """
   use EvolutionWeb, :controller
 
-  # alias Evolution.Contexts.Measurements
+  alias Evolution.Contexts.Measurements
+  # alias Evolution.Repositories.User
   # alias Evolution.Contexts.Measurements.Input
+
+  def index(conn, _params) do
+    user = conn.assigns.current_user
+    skin_folds = Measurements.list_skin_folds(user)
+
+    conn
+    |> put_status(:ok)
+    # |> put_view(EvolutionWeb.SkinFoldJSON)
+    |> render(:index, skin_folds: skin_folds)
+  end
 
   # def create(conn, attrs) do
   #   user = conn.assigns.current_user

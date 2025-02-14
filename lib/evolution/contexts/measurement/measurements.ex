@@ -26,4 +26,8 @@ defmodule Evolution.Contexts.Measurements do
       fold
     end
   end
+
+  def list_skin_folds(%User{} = user) do
+    Store.list_by_user(user.id)
+  end
 end

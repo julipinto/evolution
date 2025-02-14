@@ -6,7 +6,7 @@ defmodule Evolution.Core.Users.Auth do
   alias Evolution.Core.Guardian
   alias Evolution.Repositories.User.Store
 
-  @ttl {30, :days}
+  # @ttl {30, :days}
 
   def authenticate(email, password) do
     user = Store.get_by_email(email)
