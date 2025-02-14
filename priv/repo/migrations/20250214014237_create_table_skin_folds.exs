@@ -5,7 +5,7 @@ defmodule Evolution.Repo.Migrations.CreateTableSkinFolds do
   def up do
     create table(:skin_folds) do
       add :weight, :float
-      
+
       add :triceps_fold, :float
       add :biceps_fold, :float
       add :abdominal_fold, :float
@@ -27,7 +27,7 @@ defmodule Evolution.Repo.Migrations.CreateTableSkinFolds do
       add :lean_mass, :float
       add :fold_sum, :float
       add :body_density, :float
-    
+
       add :method, :string
       add :measured_at, :utc_datetime
       add :user_id, references(:users, on_delete: :delete_all)

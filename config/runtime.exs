@@ -67,7 +67,7 @@ if config_env() == :prod do
 
   guardian_secret_key =
     System.get_env("GUARDIAN_SECRET_KEY") || raise "GUARDIAN_SECRET_KEY is missing"
-  
+
   config :evolution, Evolution.Core.Guardian,
     issuer: "evolution",
     secret_key: guardian_secret_key

@@ -66,6 +66,8 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     field :measured_at, :date
 
     belongs_to :user, User
+
+    timestamps()
   end
 
   def changeset(skin_fold \\ %__MODULE__{}, attrs) do

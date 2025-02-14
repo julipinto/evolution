@@ -11,13 +11,12 @@ defmodule EvolutionWeb.SkinFoldJSON do
     %{
       id: skin_fold.id,
       measurements: %{
-        triceps: skin_fold.triceps,
-        subscapular: skin_fold.subscapular,
-        abdominal: skin_fold.abdominal,
-        suprailiac: skin_fold.suprailiac,
-        thigh: skin_fold.thigh,
-        chest: skin_fold.chest,
-        axilla: skin_fold.axilla
+        triceps: skin_fold.triceps_fold,
+        biceps: skin_fold.biceps_fold,
+        abdominal: skin_fold.abdominal_fold,
+        subscapular: skin_fold.subscapular_fold,
+        thigh: skin_fold.thigh_fold,
+        suprailiac: skin_fold.suprailiac_fold
       }
     }
   end

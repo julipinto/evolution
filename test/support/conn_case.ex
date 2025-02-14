@@ -17,6 +17,8 @@ defmodule EvolutionWeb.ConnCase do
 
   use ExUnit.CaseTemplate
 
+  alias Evolution.Core.Guardian
+
   using do
     quote do
       # The default endpoint for testing
@@ -34,5 +36,20 @@ defmodule EvolutionWeb.ConnCase do
   setup tags do
     Evolution.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
+  end
+
+  @doc """
+  This function is used to simulate an authenticated user
+
+  * ATENTION: it won't validate credentials, it will only
+  * set the authorization header with a valid token 
+  """
+  def authenticate(conn, user) do
+    Plug.Conn.put_req_header(conn, "authorization", "Bearer #{get_user_token(user)}")
+  end
+
+  def get_user_token(user) do
+    {:ok, jwt, _claims} = Guardian.encode_and_sign(%{id: user.id}, %{}, ttl: {20, :seconds})
+    jwt
   end
 end

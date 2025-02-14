@@ -5,7 +5,6 @@ defmodule EvolutionWeb.Plugs.Auth do
   alias Evolution.Core.Guardian
 
   import Plug.Conn
-  
 
   def init(opts), do: opts
 
