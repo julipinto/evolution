@@ -1,4 +1,4 @@
-defmodule Evolution.Repositories.Measurement.SkinFolds.Store do
+defmodule Evolution.Repositories.Measurement.SkinFoldStore do
   @moduledoc """
   Store module for the SkinFolds measurement.
   """
