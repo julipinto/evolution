@@ -5,7 +5,7 @@ defmodule Evolution.Contexts.Measurements do
 
   alias Evolution.Contexts.Measurements.SkinFoldType
   alias Evolution.Core.Measurements.SkinFold
-  alias Evolution.Repositories.Measurement.SkinFoldStore
+  alias Evolution.Repositories.Measurements.SkinFoldStore
   alias Evolution.Repositories.User
 
   @method "3"
