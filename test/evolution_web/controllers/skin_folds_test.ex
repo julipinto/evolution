@@ -15,7 +15,7 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
     {:ok, conn: conn, user: user}
   end
 
-  describe "list Skin Folds" do
+  describe "should list Skin Folds" do
     test "get skin folds", %{conn: conn, user: user} do
       skin_fold = SkinFoldsFixture.create_skin_folds(user.id)
       skin_fold_id = skin_fold.id
@@ -57,7 +57,7 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
   end
 
   describe "create Skin Fold" do
-    test "create skin fold", %{conn: conn} do
+    test "should create skin fold with right params", %{conn: conn} do
       params = %{
         "triceps" => 12.4,
         "biceps" => 8.3,
@@ -102,6 +102,23 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
                  }
                }
              }
+    end
+
+    test "should create skin fold with default measure_at today", %{conn: conn} do
+      today = Date.utc_today() |> Date.to_string()
+
+      params = %{
+        "triceps" => 12.4,
+        "biceps" => 8.3,
+        "abdominal" => 18.7,
+        "subscapular" => 14.2,
+        "thigh" => 16.1,
+        "suprailiac" => 10.5,
+        "weight" => 70.0
+      }
+
+      result = conn |> post(@path, params) |> json_response(201)
+      assert result["skin_fold"]["measured_at"] == today
     end
 
     # test "get skin folds", %{conn: conn, user: user} do

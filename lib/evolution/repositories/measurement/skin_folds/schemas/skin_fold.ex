@@ -86,9 +86,11 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     |> measured_at()
   end
 
-  def measured_at(%Ecto.Changeset{valid?: true, changes: %{measured_at: measured_at}} = changeset)
-      when measured_at == nil do
-    put_change(changeset, :measured_at, Date.utc_today())
+  def measured_at(%Ecto.Changeset{valid?: true} = changeset) do
+    case get_field(changeset, :measured_at) do
+      nil -> put_change(changeset, :measured_at, Date.utc_today())
+      _ -> changeset
+    end
   end
 
   def measured_at(changeset), do: changeset
