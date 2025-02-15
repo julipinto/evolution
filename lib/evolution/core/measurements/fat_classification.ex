@@ -149,11 +149,13 @@ defmodule Evolution.Core.Measurements.FatClassification do
       nil ->
         "Invalid data or age out of considered ranges"
 
-      table ->
-        table.classifications
-        |> Enum.find_value("Out of standards", fn {classification, range} ->
-          if fat_percentage in range, do: Atom.to_string(classification)
-        end)
+        table -> 
+          Enum.find_value(table.classifications, "Out of standards", &classify_value/1)
+      end
+    end
+
+    defp classify_value({classification, range}) do
+      if fat_percentage in range, do: Atom.to_string(classification)
     end
   end
 end
