@@ -19,7 +19,7 @@ defmodule Evolution.Core.Measurements.SkinFold do
   alias Evolution.Repositories.Measurements.SkinFold
   alias Evolution.Repositories.User
 
-  def calculate(%User{gender: gender} = user, method, attrs) do
+  def calculate_folds(%User{gender: gender} = user, method, attrs) do
     user_age = Users.get_age(user)
 
     density_stats =
@@ -42,7 +42,7 @@ defmodule Evolution.Core.Measurements.SkinFold do
     }
   end
 
-  def diff(nil, _folds),
+  def calculate_diff_from_last_measurement(nil, _folds),
     do: %{
       triceps_last_diff: nil,
       biceps_last_diff: nil,
@@ -52,7 +52,7 @@ defmodule Evolution.Core.Measurements.SkinFold do
       suprailiac_last_diff: nil
     }
 
-  def diff(%SkinFold{} = last_m, %SkinFoldType{} = new_m) do
+  def calculate_diff_from_last_measurement(%SkinFold{} = last_m, %SkinFoldType{} = new_m) do
     %{
       triceps_last_diff: safe_subtract(last_m.triceps_fold, new_m.triceps_fold),
       biceps_last_diff: safe_subtract(last_m.biceps_fold, new_m.biceps_fold),

@@ -16,8 +16,8 @@ defmodule Evolution.Contexts.Measurements do
 
   def register_skin_fold(%User{} = user, %SkinFoldType{} = attrs) do
     last_measurement = SkinFoldStore.get_last_measurement_from_user(user.id)
-    diff = SkinFold.diff(last_measurement, attrs)
-    stats = SkinFold.calculate(user, @method, attrs)
+    diff = SkinFold.calculate_diff_from_last_measurement(last_measurement, attrs)
+    stats = SkinFold.calculate_folds(user, @method, attrs)
 
     measurement =
       attrs
