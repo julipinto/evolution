@@ -6,8 +6,6 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
 
   alias Evolution.Fixtures.SkinFoldsFixture
   alias Evolution.Fixtures.UserFixture
-  # alias Evolution.Repositories.SkinFold
-  # alias Evolution.Repositories.User
 
   @path "/measurements/skin_folds"
 
@@ -17,7 +15,7 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
     {:ok, conn: conn, user: user}
   end
 
-  describe "Skin Folds" do
+  describe "list Skin Folds" do
     test "get skin folds", %{conn: conn, user: user} do
       skin_fold = SkinFoldsFixture.create_skin_folds(user.id)
       skin_fold_id = skin_fold.id
@@ -56,7 +54,9 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
                }
              ]
     end
+  end
 
+  describe "create Skin Fold" do
     test "create skin fold", %{conn: conn} do
       params = %{
         "triceps" => 12.4,
