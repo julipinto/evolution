@@ -59,14 +59,14 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
   describe "create Skin Fold" do
     test "should create skin fold with right params", %{conn: conn} do
       params = %{
-        "triceps" => 12.4,
-        "biceps" => 8.3,
-        "abdominal" => 18.7,
-        "subscapular" => 14.2,
-        "thigh" => 16.1,
-        "suprailiac" => 10.5,
-        "weight" => 70.0,
-        "measured_at" => "2021-01-01"
+        "triceps" => 17.6,
+        "biceps" => 13.8,
+        "abdominal" => 28.8,
+        "subscapular" => 27,
+        "thigh" => 31.5,
+        "suprailiac" => 25.9,
+        "weight" => 99.9,
+        "measured_at" => "2023-11-10"
       }
 
       result = conn |> post(@path, params) |> json_response(201)

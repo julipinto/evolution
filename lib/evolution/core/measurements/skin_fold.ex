@@ -19,14 +19,11 @@ defmodule Evolution.Core.Measurements.SkinFold do
   alias Evolution.Repositories.Measurements.SkinFold
   alias Evolution.Repositories.User
 
-  def calculate_folds(%User{gender: gender} = user, method, attrs) do
+  def calculate_folds(%User{gender: gender} = user, method, attrs, measurement_keys) do
     user_age = Users.get_age(user)
 
     density_stats =
-      case method do
-        "3" -> calculate_3_folds_density(user_age, gender, attrs)
-        "7" -> calculate_7_folds_density(user_age, gender, attrs)
-      end
+      calculates_folds_sum_and_density(method, user_age, gender, attrs, measurement_keys)
 
     fat_percentage = calculate_fat_percentage(density_stats.body_density)
 
@@ -70,48 +67,37 @@ defmodule Evolution.Core.Measurements.SkinFold do
 
   defp safe_subtract(a, b), do: a - b
 
-  defp calculate_3_folds_density(age, :female, attrs) do
-    sum = sum_folds(attrs, "3")
+  defp calculates_folds_sum_and_density(method, age, gender, attrs, measurement_keys) do
+    sum = sum_folds(attrs, measurement_keys)
 
     %{
-      body_density: 1.0994921 - 0.0009929 * sum + :math.pow(0.0000023, 2) - 0.0001392 * age,
+      body_density: calculate_body_density(method, gender, age, sum),
       fold_sum: sum
     }
   end
 
-  # defp calculate_3_folds_density(age, :male, attrs) do
-  #   _pass
-  # end
-
-  defp calculate_7_folds_density(age, :female, attrs) do
-    sum = sum_folds(attrs, "7")
-
-    %{
-      body_density: 1.097 - 0.00046971 * sum + :math.pow(0.00000056, 2) - 0.00012828 * age,
-      fold_sum: sum
-    }
+  def calculate_body_density("3 folds", :female, age, sum) do
+    1.0994921 - 0.0009929 * sum + 0.0000023 * :math.pow(sum, 2) - 0.0001392 * age
   end
 
-  # defp calculate_7_folds_density(age, :male, attrs) do
-  #   _pass
-  # end
-
-  def sum_folds(
-        %{
-          triceps_fold: triceps_fold,
-          biceps_fold: biceps_fold,
-          abdominal_fold: abdominal_fold,
-          subscapular_fold: subscapular_fold,
-          thigh_fold: thigh_fold,
-          suprailiac_fold: suprailiac_fold
-        },
-        "3"
-      ) do
-    triceps_fold + biceps_fold + abdominal_fold + subscapular_fold + thigh_fold + suprailiac_fold
+  def calculate_body_density("3 folds", :male, age, sum) do
+    1.10938 - 0.0008267 * sum + 0.0000016 * :math.pow(sum, 2) - 0.0002574 * age
   end
 
-  def sum_folds(_attrs, _method),
-    do: 0
+  def calculate_body_density("7 folds", :female, age, sum) do
+    1.097 - 0.00046971 * sum + 0.00000056 * :math.pow(sum, 2) - 0.00012828 * age
+  end
+
+  def calculate_body_density("7 folds", :male, age, sum) do
+    1.112 - 0.00043499 * sum + 0.00000055 * :math.pow(sum, 2) - 0.00028826 * age
+  end
+
+  def sum_folds(attrs, measurement_keys) do
+    attrs
+    |> Map.take(measurement_keys)
+    |> Map.values()
+    |> Enum.sum()
+  end
 
   defp calculate_fat_percentage(body_density) do
     (4.95 / body_density - 4.5) * 100
