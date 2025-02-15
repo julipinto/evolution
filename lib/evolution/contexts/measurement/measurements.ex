@@ -25,7 +25,6 @@ defmodule Evolution.Contexts.Measurements do
       |> Map.merge(stats)
       |> Map.merge(%{user_id: user.id})
       |> Map.put(:method, @method)
-      |> IO.inspect()
 
     Store.create(measurement)
   end
