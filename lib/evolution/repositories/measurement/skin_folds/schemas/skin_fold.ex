@@ -9,6 +9,7 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
   alias Evolution.Repositories.User
 
   @fields [
+    :weight,
     :triceps_fold,
     :biceps_fold,
     :abdominal_fold,
@@ -22,6 +23,13 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     :thigh_last_diff,
     :suprailiac_last_diff,
     :method,
+    :fat_percentage,
+    :fat_classification,
+    :fat_mass,
+    :residual_mass,
+    :lean_mass,
+    :fold_sum,
+    :body_density,
     :measured_at,
     :user_id
   ]

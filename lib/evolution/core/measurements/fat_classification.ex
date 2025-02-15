@@ -142,20 +142,18 @@ defmodule Evolution.Core.Measurements.FatClassification do
 
   """
   def classify(gender, age, fat_percentage) do
-    gender
-    |> Map.get(@classification_tables, [])
+    @classification_tables
+    |> Map.get(gender, [])
     |> Enum.find(fn table -> age in table.age_range end)
     |> case do
       nil ->
         "Invalid data or age out of considered ranges"
 
-        table -> 
-          Enum.find_value(table.classifications, "Out of standards", &classify_value/1)
-      end
-    end
-
-    defp classify_value({classification, range}) do
-      if fat_percentage in range, do: Atom.to_string(classification)
+      table ->
+        table.classifications
+        |> Enum.find_value("Out of standards", fn {classification, range} ->
+          if fat_percentage in range, do: Atom.to_string(classification)
+        end)
     end
   end
 end

@@ -3,14 +3,18 @@ defmodule Evolution.Contexts.Measurements do
   Measurements
   """
 
-  alias Evolution.Contexts.Measurements.Input
+  alias Evolution.Contexts.Measurements.SkinFoldType
   alias Evolution.Core.Measurements.SkinFold
   alias Evolution.Repositories.Measurement.SkinFolds.Store
   alias Evolution.Repositories.User
 
   @method "3"
 
-  def register_skin_fold(%User{} = user, %Input{} = attrs) do
+  def list_skin_folds(%User{} = user) do
+    Store.list_by_user(user.id)
+  end
+
+  def register_skin_fold(%User{} = user, %SkinFoldType{} = attrs) do
     last_measurement = Store.get_last_measurement_from_user(user.id)
     diff = SkinFold.diff(last_measurement, attrs)
     stats = SkinFold.calculate(user, @method, attrs)
@@ -21,13 +25,8 @@ defmodule Evolution.Contexts.Measurements do
       |> Map.merge(stats)
       |> Map.merge(%{user_id: user.id})
       |> Map.put(:method, @method)
+      |> IO.inspect()
 
-    with {:ok, fold} <- Store.create(measurement) do
-      fold
-    end
-  end
-
-  def list_skin_folds(%User{} = user) do
-    Store.list_by_user(user.id)
+    Store.create(measurement)
   end
 end

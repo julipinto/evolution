@@ -13,6 +13,7 @@ defmodule Evolution.Core.Measurements.SkinFold do
     :body_density
   ]
 
+  alias Evolution.Contexts.Measurements.SkinFoldType
   alias Evolution.Core.Measurements.FatClassification
   alias Evolution.Core.Users.Users
   alias Evolution.Repositories.Measurements.SkinFold
@@ -51,16 +52,23 @@ defmodule Evolution.Core.Measurements.SkinFold do
       suprailiac_last_diff: nil
     }
 
-  def diff(%SkinFold{} = skin_fold, folds) do
+  def diff(%SkinFold{} = last_m, %SkinFoldType{} = new_m) do
     %{
-      triceps_last_diff: skin_fold.triceps_fold - folds.triceps_fold,
-      biceps_last_diff: skin_fold.biceps_fold - folds.biceps_fold,
-      abdominal_last_diff: skin_fold.abdominal_fold - folds.abdominal_fold,
-      subscapular_last_diff: skin_fold.subscapular_fold - folds.subscapular_fold,
-      thigh_last_diff: skin_fold.thigh_fold - folds.thigh_fold,
-      suprailiac_last_diff: skin_fold.suprailiac_fold - folds.suprailiac_fold
+      triceps_last_diff: safe_subtract(last_m.triceps_fold, new_m.triceps_fold),
+      biceps_last_diff: safe_subtract(last_m.biceps_fold, new_m.biceps_fold),
+      abdominal_last_diff: safe_subtract(last_m.abdominal_fold, new_m.abdominal_fold),
+      subscapular_last_diff: safe_subtract(last_m.subscapular_fold, new_m.subscapular_fold),
+      thigh_last_diff: safe_subtract(last_m.thigh_fold, new_m.thigh_fold),
+      suprailiac_last_diff: safe_subtract(last_m.suprailiac_fold, new_m.suprailiac_fold)
     }
   end
+
+  defp safe_subtract(nil, _),
+    do: nil
+
+  defp safe_subtract(_, nil), do: nil
+
+  defp safe_subtract(a, b), do: a - b
 
   defp calculate_3_folds_density(age, :female, attrs) do
     sum = sum_folds(attrs, "3")

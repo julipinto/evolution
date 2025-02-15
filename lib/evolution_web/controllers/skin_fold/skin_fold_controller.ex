@@ -6,6 +6,7 @@ defmodule EvolutionWeb.SkinFoldController do
   use EvolutionWeb, :controller
 
   alias Evolution.Contexts.Measurements
+  alias Evolution.Contexts.Measurements.SkinFoldType
 
   def index(conn, _params) do
     user = conn.assigns.current_user
@@ -16,21 +17,23 @@ defmodule EvolutionWeb.SkinFoldController do
     |> render(:index, skin_folds: skin_folds)
   end
 
-  # def create(conn, attrs) do
-  #   user = conn.assigns.current_user
-  #   attrs = Map.merge(skin_fold_params, %{"user_id" => user.id})
-  # input = %Input{attrs}
+  def create(%{assigns: %{current_user: user}} = conn, attrs) do
+    measurement =
+      SkinFoldType.to_type(%{
+        triceps: Map.get(attrs, "triceps"),
+        biceps: Map.get(attrs, "biceps"),
+        abdominal: Map.get(attrs, "abdominal"),
+        subscapular: Map.get(attrs, "subscapular"),
+        thigh: Map.get(attrs, "thigh"),
+        suprailiac: Map.get(attrs, "suprailiac"),
+        weight: Map.get(attrs, "weight"),
+        measured_at: Map.get(attrs, "measured_at")
+      })
 
-  #   case Measurements.register_skin_fold(user, input) do
-  #     {:ok, _} ->
-  #       conn
-  #       |> put_flash(:info, "Skin fold measurement registered")
-  #       |> redirect(to: Routes.user_path(conn, :show, user))
-
-  #     {:error, %Ecto.Changeset{} = changeset} ->
-  #       conn
-  #       |> put_flash(:error, "Error registering skin fold measurement")
-  #       |> render("new.html", changeset: changeset)
-  #   endGuardian
-  # end
+    with {:ok, skin_fold} <- Measurements.register_skin_fold(user, measurement) do
+      conn
+      |> put_status(:created)
+      |> render("show.json", skin_fold: skin_fold)
+    end
+  end
 end

@@ -7,19 +7,21 @@ defmodule Evolution.Repositories.Measurement.SkinFolds.Store do
 
   import Ecto.Query
 
-  def create(%SkinFold{} = skin_fold) do
+  def create(skin_fold) do
     skin_fold
+    |> Map.from_struct()
     |> SkinFold.changeset()
     |> Repo.insert()
   end
 
-  def update(%SkinFold{} = skin_fold) do
+  def update(skin_fold) do
     skin_fold
+    |> Map.from_struct()
     |> SkinFold.changeset()
     |> Repo.update()
   end
 
-  def delete(%SkinFold{} = skin_fold) do
+  def delete(skin_fold) do
     Repo.delete(skin_fold)
   end
 
