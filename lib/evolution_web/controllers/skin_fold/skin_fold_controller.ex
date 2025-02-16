@@ -8,6 +8,8 @@ defmodule EvolutionWeb.SkinFoldController do
   alias Evolution.Contexts.Measurements
   alias Evolution.Contexts.Measurements.SkinFoldType
 
+  action_fallback(EvolutionWeb.Controllers.FallbackController)
+
   def index(conn, _params) do
     user = conn.assigns.current_user
     skin_folds = Measurements.list_skin_folds(user)

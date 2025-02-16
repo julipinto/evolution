@@ -125,6 +125,57 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
       assert result["skin_fold"]["measured_at"] == today
     end
 
+    test "should calculate diffs correctly", %{conn: conn} do
+      first_measurement = %{
+        "triceps" => 12.4,
+        "biceps" => 8.3,
+        # "abdominal" => 18.7, # missing measurement
+        "subscapular" => 14.2,
+        "thigh" => 16.1,
+        "suprailiac" => 10.5,
+        "weight" => 70.0
+      }
+
+      post(conn, @path, first_measurement)
+
+      second_measurement = %{
+        "triceps" => 12,
+        "biceps" => 8.5,
+        "abdominal" => 19.7,
+        "subscapular" => nil,
+        "thigh" => 16.4,
+        "suprailiac" => 10.8,
+        "weight" => 70.5
+      }
+
+      result = post(conn, @path, second_measurement) |> json_response(201)
+
+      assert result["skin_fold"]["diffs"] == %{
+               "abdominal" => nil,
+               "biceps" => -0.1999999999999993,
+               "subscapular" => nil,
+               "suprailiac" => -0.3000000000000007,
+               "thigh" => -0.29999999999999716,
+               "triceps" => 0.40000000000000036
+             }
+    end
+
+    test "should not calculate when invalid measurements are sent", %{conn: conn} do
+      first_measurement = %{
+        # "triceps" => 12.4, # missing required measurement
+        "biceps" => 8.3,
+        "abdominal" => 18.7,
+        "subscapular" => 14.2,
+        "thigh" => 16.1,
+        "suprailiac" => 10.5,
+        "weight" => 70.0
+      }
+
+      result = post(conn, @path, first_measurement) |> json_response(400)
+
+      assert result == %{"errors" => %{"detail" => "Bad Request"}}
+    end
+
     # test "get skin folds", %{conn: conn, user: user} do
     #   skin_fold = insert(:skin_fold, user_id: user.id)
     #   conn = get(conn, skin_fold_path(conn, :index))

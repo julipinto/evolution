@@ -1,0 +1,9 @@
+{
+  "skip_files": [
+    "priv",
+    "test/support",
+    "lib/evolution/endpoint.ex",
+    "lib/evolution/core/application.ex",
+    "lib/evolution_web/telemetry.ex"
+  ]
+}

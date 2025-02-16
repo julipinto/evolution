@@ -4,16 +4,16 @@ defmodule EvolutionWeb.Controllers.AuthControllerTest do
   alias Evolution.Core.Crypt
   alias Evolution.Fixtures.UserFixture
 
-
   setup %{conn: conn} do
     email = "email@mail.com"
     password_hash = Crypt.hash("password")
-    
-    user = UserFixture.create_user(%{
-      email: email,
-      password_hash: password_hash
-    })
-    
+
+    user =
+      UserFixture.create_user(%{
+        email: email,
+        password_hash: password_hash
+      })
+
     {:ok, conn: conn, user: user, email: email, password: "password"}
   end
 

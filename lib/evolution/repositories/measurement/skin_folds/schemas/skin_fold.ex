@@ -35,12 +35,7 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
   ]
 
   @required_fields [
-    :triceps_fold,
-    :biceps_fold,
-    :abdominal_fold,
-    :subscapular_fold,
-    :thigh_fold,
-    :suprailiac_fold,
+    :weight,
     :method,
     :user_id
   ]
@@ -67,6 +62,8 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     # new
     # field :medium_axillary_last_diff, :float
     # field :calf_last_diff, :float
+
+    # weight_diff, :float
 
     field :fat_percentage, :float
     field :fat_classification, :string
@@ -98,6 +95,4 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
       _ -> changeset
     end
   end
-
-  def measured_at(changeset), do: changeset
 end

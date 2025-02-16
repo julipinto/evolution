@@ -6,7 +6,7 @@ defmodule Evolution.Core.Measurements.Validators do
 
     case attrs_has_measurements?(attrs, measurement_keys) do
       true -> {:ok, measurement_keys}
-      false -> {:error, "Invalid measurements"}
+      false -> {:error, :invalid_params}
     end
   end
 
