@@ -49,9 +49,8 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     field :subscapular_fold, :float
     field :thigh_fold, :float
     field :suprailiac_fold, :float
-    # new
-    # field :medium_axillary_fold, :float
-    # field :calf_fold, :float
+    field :medium_axillary_fold, :float
+    field :calf_fold, :float
 
     field :triceps_last_diff, :float
     field :biceps_last_diff, :float
@@ -60,10 +59,9 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     field :thigh_last_diff, :float
     field :suprailiac_last_diff, :float
     # new
-    # field :medium_axillary_last_diff, :float
-    # field :calf_last_diff, :float
-
-    # weight_diff, :float
+    field :medium_axillary_last_diff, :float
+    field :calf_last_diff, :float
+    field :weight_diff, :float
 
     field :fat_percentage, :float
     field :fat_classification, :string
