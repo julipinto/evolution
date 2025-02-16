@@ -22,6 +22,8 @@ defmodule Evolution.Contexts.Measurements.SkinFoldType do
       subscapular_fold: Map.get(input, :subscapular),
       thigh_fold: Map.get(input, :thigh),
       suprailiac_fold: Map.get(input, :suprailiac),
+      middle_axillary_fold: Map.get(input, :middle_axillary),
+      calf_fold: Map.get(input, :calf),
       weight: Map.get(input, :weight),
       measured_at: Map.get(input, :measured_at),
       measured_by: Map.get(input, :measured_by)

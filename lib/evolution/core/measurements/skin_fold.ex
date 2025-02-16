@@ -39,26 +39,26 @@ defmodule Evolution.Core.Measurements.SkinFold do
     }
   end
 
-  def calculate_diff_from_last_measurement(nil, _folds),
-    do: %{
-      triceps_last_diff: nil,
-      biceps_last_diff: nil,
-      abdominal_last_diff: nil,
-      subscapular_last_diff: nil,
-      thigh_last_diff: nil,
-      suprailiac_last_diff: nil
-    }
+  # def calculate_diff_from_last_measurement(nil, _folds),
+  #   do: %{
+  #     triceps_last_diff: nil,
+  #     biceps_last_diff: nil,
+  #     abdominal_last_diff: nil,
+  #     subscapular_last_diff: nil,
+  #     thigh_last_diff: nil,
+  #     suprailiac_last_diff: nil
+  #   }
 
-  def calculate_diff_from_last_measurement(%SkinFold{} = last_m, %SkinFoldType{} = new_m) do
-    %{
-      triceps_last_diff: safe_subtract(last_m.triceps_fold, new_m.triceps_fold),
-      biceps_last_diff: safe_subtract(last_m.biceps_fold, new_m.biceps_fold),
-      abdominal_last_diff: safe_subtract(last_m.abdominal_fold, new_m.abdominal_fold),
-      subscapular_last_diff: safe_subtract(last_m.subscapular_fold, new_m.subscapular_fold),
-      thigh_last_diff: safe_subtract(last_m.thigh_fold, new_m.thigh_fold),
-      suprailiac_last_diff: safe_subtract(last_m.suprailiac_fold, new_m.suprailiac_fold)
-    }
-  end
+  # def calculate_diff_from_last_measurement(%SkinFold{} = last_m, %SkinFoldType{} = new_m) do
+  #   %{
+  #     triceps_last_diff: safe_subtract(last_m.triceps_fold, new_m.triceps_fold),
+  #     biceps_last_diff: safe_subtract(last_m.biceps_fold, new_m.biceps_fold),
+  #     abdominal_last_diff: safe_subtract(last_m.abdominal_fold, new_m.abdominal_fold),
+  #     subscapular_last_diff: safe_subtract(last_m.subscapular_fold, new_m.subscapular_fold),
+  #     thigh_last_diff: safe_subtract(last_m.thigh_fold, new_m.thigh_fold),
+  #     suprailiac_last_diff: safe_subtract(last_m.suprailiac_fold, new_m.suprailiac_fold)
+  #   }
+  # end
 
   defp safe_subtract(nil, _),
     do: nil

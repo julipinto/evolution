@@ -1,4 +1,7 @@
 defmodule Evolution.Core.Measurements.Validators do
+  @moduledoc """
+  Validators for measurements
+  """
   alias Evolution.Repositories.User
 
   def validate_skin_fold_measurements(user, method, attrs) do

@@ -28,6 +28,8 @@ defmodule EvolutionWeb.SkinFoldController do
         subscapular: Map.get(attrs, "subscapular"),
         thigh: Map.get(attrs, "thigh"),
         suprailiac: Map.get(attrs, "suprailiac"),
+        middle_axillary: Map.get(attrs, "middle_axillary"),
+        calf: Map.get(attrs, "calf"),
         weight: Map.get(attrs, "weight"),
         measured_at: Map.get(attrs, "measured_at"),
         measured_by: Map.get(attrs, "measured_by")
