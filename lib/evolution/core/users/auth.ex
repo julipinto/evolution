@@ -12,7 +12,7 @@ defmodule Evolution.Core.Users.Auth do
     user = Store.get_by_email(email)
 
     case user do
-      nil -> {:error, "User not found"}
+      nil -> {:error, "Invalid credentials"}
       user -> check_and_sign_in(user, password)
     end
   end
