@@ -86,11 +86,11 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
                    "thigh" => 31.5,
                    "triceps" => 17.6,
                    "calf" => 10.5,
-                   "middle_axillary" => 10.5,
+                   "middle_axillary" => 10.5
                  },
                  "stats" => %{
                    "body_density" => 1.0344821000000002,
-                   "fat_classification" => "Out of standards",
+                   "fat_classification" => "high",
                    "fat_mass" => 27.53938097703182,
                    "fat_percentage" => 27.566947924956775,
                    "lean_mass" => 72.3606190229682,
@@ -117,42 +117,6 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
       result = conn |> post(@path, params) |> json_response(201)
       assert result["skin_fold"]["measured_at"] == today
     end
-
-    # test "should calculate diffs correctly", %{conn: conn} do
-    #   first_measurement = %{
-    #     "triceps" => 12.4,
-    #     "biceps" => 8.3,
-    #     # "abdominal" => 18.7, # missing measurement
-    #     "subscapular" => 14.2,
-    #     "thigh" => 16.1,
-    #     "suprailiac" => 10.5,
-    #     "weight" => 70.0
-    #   }
-
-    #   post(conn, @path, first_measurement)
-
-    #   second_measurement = %{
-    #     "triceps" => 12,
-    #     "biceps" => 8.5,
-    #     "abdominal" => 19.7,
-    #     "subscapular" => nil,
-    #     "thigh" => 16.4,
-    #     "suprailiac" => 10.8,
-    #     "weight" => 70.5
-    #   }
-
-    #   response = post(conn, @path, second_measurement)
-    #   result = json_response(response, 201)
-
-    #   assert result["skin_fold"]["diffs"] == %{
-    #            "abdominal" => nil,
-    #            "biceps" => -0.1999999999999993,
-    #            "subscapular" => nil,
-    #            "suprailiac" => -0.3000000000000007,
-    #            "thigh" => -0.29999999999999716,
-    #            "triceps" => 0.40000000000000036
-    #          }
-    # end
 
     test "should not calculate when invalid measurements are sent", %{conn: conn} do
       first_measurement = %{

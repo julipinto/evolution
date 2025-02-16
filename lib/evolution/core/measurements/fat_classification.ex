@@ -8,56 +8,56 @@ defmodule Evolution.Core.Measurements.FatClassification do
       %{
         age_range: 18..25,
         classifications: [
-          excellent: 4..6,
-          good: 7..10,
-          adequate: 11..13,
-          moderately_high: 14..16,
-          high: 17..20,
-          very_high: 21..24
+          excellent: {4, 6.9},
+          good: {7, 10.9},
+          adequate: {11, 13.9},
+          moderately_high: {14, 16.9},
+          high: {17, 20.9},
+          very_high: {21, 24.9}
         ]
       },
       %{
         age_range: 26..35,
         classifications: [
-          excellent: 8..11,
-          good: 12..15,
-          adequate: 16..18,
-          moderately_high: 19..20,
-          high: 21..24,
-          very_high: 25..27
+          excellent: {8, 1.9},
+          good: {12, 15.9},
+          adequate: {16, 18.9},
+          moderately_high: {19, 20.9},
+          high: {21, 24.9},
+          very_high: {25, 27.9}
         ]
       },
       %{
         age_range: 36..45,
         classifications: [
-          excellent: 10..14,
-          good: 15..18,
-          adequate: 19..21,
-          moderately_high: 22..23,
-          high: 24..25,
-          very_high: 26..29
+          excellent: {10, 14.9},
+          good: {15, 18.9},
+          adequate: {19, 21.9},
+          moderately_high: {22, 23.9},
+          high: {24, 25.9},
+          very_high: {26, 29.9}
         ]
       },
       %{
         age_range: 46..55,
         classifications: [
-          excellent: 12..16,
-          good: 17..20,
-          adequate: 21..23,
-          moderately_high: 24..25,
-          high: 26..27,
-          very_high: 28..30
+          excellent: {12, 16},
+          good: {17, 20},
+          adequate: {21, 23},
+          moderately_high: {24, 25},
+          high: {26, 27},
+          very_high: {28, 30}
         ]
       },
       %{
         age_range: 56..65,
         classifications: [
-          excellent: 13..18,
-          good: 19..21,
-          adequate: 22..23,
-          moderately_high: 24..25,
-          high: 26..27,
-          very_high: 28..30
+          excellent: {13, 18},
+          good: {19, 21},
+          adequate: {22, 23},
+          moderately_high: {24, 25},
+          high: {26, 27},
+          very_high: {28, 30}
         ]
       }
     ],
@@ -65,56 +65,56 @@ defmodule Evolution.Core.Measurements.FatClassification do
       %{
         age_range: 18..25,
         classifications: [
-          excellent: 13..16,
-          good: 17..19,
-          adequate: 20..22,
-          moderately_high: 23..25,
-          high: 26..28,
-          very_high: 29..31
+          excellent: {13, 16},
+          good: {17, 19},
+          adequate: {20, 22},
+          moderately_high: {23, 25},
+          high: {26, 28},
+          very_high: {29, 31}
         ]
       },
       %{
         age_range: 26..35,
         classifications: [
-          excellent: 14..16,
-          good: 18..20,
-          adequate: 21..23,
-          moderately_high: 24..25,
-          high: 27..29,
-          very_high: 31..33
+          excellent: {14, 16.9},
+          good: {18, 20.9},
+          adequate: {21, 23.9},
+          moderately_high: {24, 25.9},
+          high: {27, 29.9},
+          very_high: {31, 33.9}
         ]
       },
       %{
         age_range: 36..45,
         classifications: [
-          excellent: 16..19,
-          good: 20..23,
-          adequate: 24..26,
-          moderately_high: 27..29,
-          high: 30..32,
-          very_high: 33..36
+          excellent: {16, 19.9},
+          good: {20, 23.9},
+          adequate: {24, 26.9},
+          moderately_high: {27, 29.9},
+          high: {30, 32.9},
+          very_high: {33, 36.9}
         ]
       },
       %{
         age_range: 46..55,
         classifications: [
-          excellent: 17..21,
-          good: 23..25,
-          adequate: 26..28,
-          moderately_high: 29..31,
-          high: 32..34,
-          very_high: 35..38
+          excellent: {17, 21.9},
+          good: {23, 25.9},
+          adequate: {26, 28.9},
+          moderately_high: {29, 31.9},
+          high: {32, 34.9},
+          very_high: {35, 38.9}
         ]
       },
       %{
         age_range: 56..65,
         classifications: [
-          excellent: 18..22,
-          good: 24..26,
-          adequate: 27..29,
-          moderately_high: 30..32,
-          high: 33..35,
-          very_high: 36..38
+          excellent: {18, 22.9},
+          good: {24, 26.9},
+          adequate: {27, 29.9},
+          moderately_high: {30, 32.9},
+          high: {33, 35.9},
+          very_high: {36, 38.9}
         ]
       }
     ]
@@ -151,9 +151,20 @@ defmodule Evolution.Core.Measurements.FatClassification do
 
       table ->
         table.classifications
-        |> Enum.find_value("Out of standards", fn {classification, range} ->
-          if fat_percentage in range, do: Atom.to_string(classification)
+
+        Enum.find_value(table.classifications, "Out of standards", fn {classification,
+                                                                       {min_range, max_range}} ->
+          fat_percentage
+          |> Float.round(2)
+          |> between(min_range, max_range, classification)
         end)
+    end
+  end
+
+  defp between(value, min, max, classification) do
+    case classification == :very_high do
+      true -> if value >= min, do: Atom.to_string(classification)
+      false -> if value >= min and value <= max, do: Atom.to_string(classification)
     end
   end
 end
