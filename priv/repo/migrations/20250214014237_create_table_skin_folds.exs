@@ -12,19 +12,8 @@ defmodule Evolution.Repo.Migrations.CreateTableSkinFolds do
       add :subscapular_fold, :float
       add :thigh_fold, :float
       add :suprailiac_fold, :float
-      add :medium_axillary_fold, :float
+      add :middle_axillary_fold, :float
       add :calf_fold, :float
-
-      add :triceps_last_diff, :float
-      add :biceps_last_diff, :float
-      add :abdominal_last_diff, :float
-      add :subscapular_last_diff, :float
-      add :thigh_last_diff, :float
-      add :suprailiac_last_diff, :float
-      add :medium_axillary_last_diff, :float
-      add :calf_last_diff, :float
-
-      add :weight_diff, :float
 
       add :fat_percentage, :float
       add :fat_classification, :string
@@ -36,6 +25,7 @@ defmodule Evolution.Repo.Migrations.CreateTableSkinFolds do
 
       add :method, :string
       add :measured_at, :utc_datetime
+      add :measured_by, :string
       add :user_id, references(:users, on_delete: :delete_all)
 
       timestamps()

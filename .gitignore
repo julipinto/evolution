@@ -28,3 +28,5 @@ evolution-*.tar
 priv/repo/db/*
 
 .env
+
+.vscode

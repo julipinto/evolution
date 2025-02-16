@@ -10,7 +10,8 @@ defmodule Evolution.Contexts.Measurements.SkinFoldType do
     :thigh_fold,
     :suprailiac_fold,
     :weight,
-    :measured_at
+    :measured_at,
+    :measured_by
   ]
 
   def to_type(input) do
@@ -22,7 +23,8 @@ defmodule Evolution.Contexts.Measurements.SkinFoldType do
       thigh_fold: Map.get(input, :thigh),
       suprailiac_fold: Map.get(input, :suprailiac),
       weight: Map.get(input, :weight),
-      measured_at: Map.get(input, :measured_at)
+      measured_at: Map.get(input, :measured_at),
+      measured_by: Map.get(input, :measured_by)
     }
   end
 end

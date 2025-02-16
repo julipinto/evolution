@@ -29,7 +29,8 @@ defmodule EvolutionWeb.SkinFoldController do
         thigh: Map.get(attrs, "thigh"),
         suprailiac: Map.get(attrs, "suprailiac"),
         weight: Map.get(attrs, "weight"),
-        measured_at: Map.get(attrs, "measured_at")
+        measured_at: Map.get(attrs, "measured_at"),
+        measured_by: Map.get(attrs, "measured_by")
       })
 
     with {:ok, skin_fold} <- Measurements.register_skin_fold(user, measurement) do

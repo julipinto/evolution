@@ -22,7 +22,7 @@ defmodule Evolution.Core.Measurements.Validators do
     [
       :triceps_fold,
       :subscapular_fold,
-      :medium_axillary_fold,
+      :middle_axillary_fold,
       :suprailiac_fold,
       :abdominal_fold,
       :thigh_fold,

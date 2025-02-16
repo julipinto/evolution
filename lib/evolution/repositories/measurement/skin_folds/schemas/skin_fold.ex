@@ -16,12 +16,12 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     :subscapular_fold,
     :thigh_fold,
     :suprailiac_fold,
-    :triceps_last_diff,
-    :biceps_last_diff,
-    :abdominal_last_diff,
-    :subscapular_last_diff,
-    :thigh_last_diff,
-    :suprailiac_last_diff,
+    # :triceps_last_diff,
+    # :biceps_last_diff,
+    # :abdominal_last_diff,
+    # :subscapular_last_diff,
+    # :thigh_last_diff,
+    # :suprailiac_last_diff,
     :method,
     :fat_percentage,
     :fat_classification,
@@ -31,6 +31,7 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     :fold_sum,
     :body_density,
     :measured_at,
+    :measured_by,
     :user_id
   ]
 
@@ -49,19 +50,8 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     field :subscapular_fold, :float
     field :thigh_fold, :float
     field :suprailiac_fold, :float
-    field :medium_axillary_fold, :float
+    field :middle_axillary_fold, :float
     field :calf_fold, :float
-
-    field :triceps_last_diff, :float
-    field :biceps_last_diff, :float
-    field :abdominal_last_diff, :float
-    field :subscapular_last_diff, :float
-    field :thigh_last_diff, :float
-    field :suprailiac_last_diff, :float
-    # new
-    field :medium_axillary_last_diff, :float
-    field :calf_last_diff, :float
-    field :weight_diff, :float
 
     field :fat_percentage, :float
     field :fat_classification, :string
@@ -73,6 +63,7 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
 
     field :method, :string
     field :measured_at, :date
+    field :measured_by, :string
 
     belongs_to :user, User
 
