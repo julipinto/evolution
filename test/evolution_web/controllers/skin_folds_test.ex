@@ -10,7 +10,11 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
   @path "/measurements/skin_folds"
 
   setup %{conn: conn} do
-    user = UserFixture.create_user()
+    # Create a user with 25 years old to always match the calculation
+    today = Date.utc_today()
+    today_year = today.year
+    birthdate = Date.new(today_year - 25, today.month, today.day) |> elem(1)
+    user = UserFixture.create_user(%{birthdate: birthdate})
     conn = authenticate(conn, user)
     {:ok, conn: conn, user: user}
   end
@@ -66,7 +70,7 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
         "thigh" => 31.5,
         "suprailiac" => 25.9,
         "weight" => 99.9,
-        "measured_at" => "2023-11-10"
+        "measured_at" => "2021-01-01"
       }
 
       result = conn |> post(@path, params) |> json_response(201)
@@ -84,21 +88,21 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
                  "id" => 1,
                  "measured_at" => "2021-01-01",
                  "measurements" => %{
-                   "abdominal" => 18.7,
-                   "biceps" => 8.3,
-                   "subscapular" => 14.2,
-                   "suprailiac" => 10.5,
-                   "thigh" => 16.1,
-                   "triceps" => 12.4
+                   "abdominal" => 28.8,
+                   "biceps" => 13.8,
+                   "subscapular" => 27.0,
+                   "suprailiac" => 25.9,
+                   "thigh" => 31.5,
+                   "triceps" => 17.6
                  },
                  "stats" => %{
-                   "body_density" => 1.01498952000529,
+                   "body_density" => 1.0344821000000002,
                    "fat_classification" => "Out of standards",
-                   "fat_mass" => 26.382835162863653,
-                   "fat_percentage" => 37.68976451837665,
-                   "lean_mass" => 43.61716483713634,
-                   "residual_mass" => 14.609,
-                   "weight" => 70.0
+                   "fat_mass" => 27.53938097703182,
+                   "fat_percentage" => 27.566947924956775,
+                   "lean_mass" => 72.3606190229682,
+                   "residual_mass" => 20.8791,
+                   "weight" => 99.9
                  }
                }
              }

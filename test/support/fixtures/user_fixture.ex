@@ -6,15 +6,15 @@ defmodule Evolution.Fixtures.UserFixture do
   alias Evolution.Repositories.User
 
   def create_user(attrs \\ %{}) do
-    attrs
-    |> Map.merge(%{
+    %{
       name: "John",
       last_name: "Doe",
       email: "test@test.com",
       birthdate: ~D[1990-01-01],
       password_hash: Bcrypt.hash_pwd_salt("password"),
       gender: :female
-    })
+    }
+    |> Map.merge(attrs)
     |> User.changeset()
     |> Repo.insert!()
   end

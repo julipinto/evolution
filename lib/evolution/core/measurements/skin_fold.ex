@@ -100,11 +100,11 @@ defmodule Evolution.Core.Measurements.SkinFold do
   end
 
   defp calculate_fat_percentage(body_density) do
-    (4.95 / body_density - 4.5) * 100
+    (4.57 / body_density - 4.142) * 100
   end
 
   defp residual_mass(:female, weight) do
-    weight * 0.2087
+    weight * 0.209
   end
 
   defp residual_mass(:male, weight) do
