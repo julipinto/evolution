@@ -13,10 +13,26 @@ defmodule Evolution.Core.Measurements.SkinFold do
     :body_density
   ]
 
-  alias Evolution.Contexts.Measurements.SkinFoldType
+  @diff_fields [
+    :weight,
+    :triceps_fold,
+    :biceps_fold,
+    :abdominal_fold,
+    :subscapular_fold,
+    :thigh_fold,
+    :suprailiac_fold,
+    :middle_axillary_fold,
+    :calf_fold,
+    :fat_percentage,
+    :fat_mass,
+    :residual_mass,
+    :lean_mass,
+    :fold_sum,
+    :body_density
+  ]
+
   alias Evolution.Core.Measurements.FatClassification
   alias Evolution.Core.Users.Users
-  alias Evolution.Repositories.Measurements.SkinFold
   alias Evolution.Repositories.User
 
   def calculate_folds(%User{gender: gender} = user, method, attrs, measurement_keys) do
@@ -39,26 +55,31 @@ defmodule Evolution.Core.Measurements.SkinFold do
     }
   end
 
-  # def calculate_diff_from_last_measurement(nil, _folds),
-  #   do: %{
-  #     triceps_last_diff: nil,
-  #     biceps_last_diff: nil,
-  #     abdominal_last_diff: nil,
-  #     subscapular_last_diff: nil,
-  #     thigh_last_diff: nil,
-  #     suprailiac_last_diff: nil
-  #   }
+  # takes an list in descending order of measurements and calculates the difference between each measurement
+  def calculate_diffs(folds) when is_list(folds) do
+    folds
+    |> Enum.with_index()
+    |> Enum.map(fn {fold, index} ->
+      if index == length(folds) - 1 do
+        add_nil_diffs(fold)
+      else
+        previous_fold = Enum.at(folds, index + 1)
+        add_diffs(fold, previous_fold)
+      end
+    end)
+  end
 
-  # def calculate_diff_from_last_measurement(%SkinFold{} = last_m, %SkinFoldType{} = new_m) do
-  #   %{
-  #     triceps_last_diff: safe_subtract(last_m.triceps_fold, new_m.triceps_fold),
-  #     biceps_last_diff: safe_subtract(last_m.biceps_fold, new_m.biceps_fold),
-  #     abdominal_last_diff: safe_subtract(last_m.abdominal_fold, new_m.abdominal_fold),
-  #     subscapular_last_diff: safe_subtract(last_m.subscapular_fold, new_m.subscapular_fold),
-  #     thigh_last_diff: safe_subtract(last_m.thigh_fold, new_m.thigh_fold),
-  #     suprailiac_last_diff: safe_subtract(last_m.suprailiac_fold, new_m.suprailiac_fold)
-  #   }
-  # end
+  def add_nil_diffs(fold) do
+    Enum.reduce(@diff_fields, fold, fn field, acc ->
+      Map.put(acc, :"#{field}_diff", nil)
+    end)
+  end
+
+  def add_diffs(current_fold, previews_fold) do
+    Enum.reduce(@diff_fields, current_fold, fn field, acc ->
+      Map.put(acc, :"#{field}_diff", safe_subtract(current_fold[field], previews_fold[field]))
+    end)
+  end
 
   defp safe_subtract(nil, _),
     do: nil

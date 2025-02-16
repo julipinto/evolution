@@ -9,6 +9,8 @@ defmodule Evolution.Contexts.Measurements.SkinFoldType do
     :subscapular_fold,
     :thigh_fold,
     :suprailiac_fold,
+    :middle_axillary_fold,
+    :calf_fold,
     :weight,
     :measured_at,
     :measured_by

@@ -25,6 +25,7 @@ defmodule Evolution.Fixtures.SkinFoldsFixture do
       body_density: 1.065,
       method: "Jackson-Pollock 7-Site",
       measured_at: ~D[2025-02-14],
+      measured_by: "John Doe",
       user_id: user_id
     }
     |> Map.merge(attrs)
