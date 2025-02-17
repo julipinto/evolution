@@ -2,7 +2,7 @@ defmodule Evolution.Repo.Migrations.CreateTableUsers do
   use Ecto.Migration
 
   def up do
-    create table :users do
+    create table(:users) do
       add :name, :string
       add :last_name, :string
       add :email, :string

@@ -3,7 +3,7 @@ defmodule Evolution.Repo.Migrations.CreateTableSkinFolds do
   use Ecto.Migration
 
   def up do
-    create table :skin_folds do
+    create table(:skin_folds) do
       add :triceps_fold, :float
       add :biceps_fold, :float
       add :abdominal_fold, :float

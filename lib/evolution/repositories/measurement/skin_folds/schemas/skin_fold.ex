@@ -6,10 +6,10 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
 
   use Ecto.Schema
 
+  alias Evolution.Repositories.Measurements.Weight
   alias Evolution.Repositories.User
 
   @fields [
-    :weight,
     :triceps_fold,
     :biceps_fold,
     :abdominal_fold,
@@ -32,14 +32,12 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
   ]
 
   @required_fields [
-    :weight,
     :method,
-    :user_id
+    :user_id,
+    :weight_id
   ]
 
   schema "skin_folds" do
-    field :weight, :float
-
     field :triceps_fold, :float
     field :biceps_fold, :float
     field :abdominal_fold, :float
@@ -62,6 +60,7 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     field :measured_by, :string
 
     belongs_to :user, User
+    belongs_to :weight, Weight
 
     timestamps()
   end
@@ -71,6 +70,7 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     |> cast(attrs, @fields)
     |> validate_required(@required_fields)
     |> foreign_key_constraint(:user_id)
+    |> foreign_key_constraint(:weight_id)
     |> measured_at()
   end
 
