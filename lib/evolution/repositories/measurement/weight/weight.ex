@@ -5,6 +5,8 @@ defmodule Evolution.Repositories.Measurements.Weight do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Evolution.Repositories.Helpers.Changeset
+
   @fields [
     :value,
     :measured_at,
@@ -25,10 +27,11 @@ defmodule Evolution.Repositories.Measurements.Weight do
   end
 
   @doc false
-  def changeset(weight, attrs) do
+  def changeset(weight \\ %__MODULE__{}, attrs) do
     weight
     |> cast(attrs, @fields)
     |> validate_required(@required_fields)
     |> foreign_key_constraint(:user_id)
+    |> Changeset.default_today_measured_at()
   end
 end

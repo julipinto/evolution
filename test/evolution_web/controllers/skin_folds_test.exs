@@ -56,6 +56,7 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
   end
 
   describe "create Skin Fold" do
+    @tag :this
     test "should create skin fold with right params", %{conn: conn} do
       params = %{
         "triceps" => 17.6,
@@ -101,6 +102,7 @@ defmodule EvolutionWeb.SkinFoldControllerTest do
              }
     end
 
+    @tag :this
     test "should create skin fold with default measure_at today", %{conn: conn} do
       today = Date.to_string(Date.utc_today())
 

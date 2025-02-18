@@ -4,14 +4,30 @@ defmodule Evolution.Repositories.Measurements.SkinFoldStore do
   """
   alias Evolution.Repo
   alias Evolution.Repositories.Measurements.SkinFold
+  alias Evolution.Repositories.Measurements.WeightStore
 
   import Ecto.Query
 
-  def create(skin_fold) do
-    skin_fold
-    |> Map.from_struct()
-    |> SkinFold.changeset()
-    |> Repo.insert()
+  def create_skin_fold_with_weight(attrs, stats, user, method) do
+    Repo.transaction(fn ->
+      weight_params =
+        attrs
+        |> Map.take([:measured_at])
+        |> Map.put(:user_id, user.id)
+        |> Map.put(:value, attrs.weight)
+
+      weight = WeightStore.create!(weight_params)
+
+      attrs
+      |> Map.merge(stats)
+      |> Map.merge(%{user_id: user.id})
+      |> Map.put(:method, method)
+      |> Map.put(:weight_id, weight.id)
+      |> Map.from_struct()
+      |> SkinFold.changeset()
+      |> Repo.insert!()
+      |> Repo.preload(:weight)
+    end)
   end
 
   def update(skin_fold) do
@@ -36,9 +52,11 @@ defmodule Evolution.Repositories.Measurements.SkinFoldStore do
 
   def list_by_user(user_id) do
     from(skin_fold in SkinFold,
+      left_join: w in assoc(skin_fold, :weight),
       where: skin_fold.user_id == ^user_id,
       order_by: [desc: skin_fold.measured_at]
     )
     |> Repo.all()
+    |> Repo.preload(:weight)
   end
 end

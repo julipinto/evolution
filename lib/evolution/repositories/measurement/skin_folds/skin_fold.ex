@@ -6,6 +6,7 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
 
   use Ecto.Schema
 
+  alias Evolution.Repositories.Helpers.Changeset
   alias Evolution.Repositories.Measurements.Weight
   alias Evolution.Repositories.User
 
@@ -28,6 +29,7 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     :body_density,
     :measured_at,
     :measured_by,
+    :weight_id,
     :user_id
   ]
 
@@ -71,13 +73,6 @@ defmodule Evolution.Repositories.Measurements.SkinFold do
     |> validate_required(@required_fields)
     |> foreign_key_constraint(:user_id)
     |> foreign_key_constraint(:weight_id)
-    |> measured_at()
-  end
-
-  def measured_at(%Ecto.Changeset{valid?: true} = changeset) do
-    case get_field(changeset, :measured_at) do
-      nil -> put_change(changeset, :measured_at, Date.utc_today())
-      _ -> changeset
-    end
+    |> Changeset.default_today_measured_at()
   end
 end

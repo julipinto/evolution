@@ -20,15 +20,7 @@ defmodule Evolution.Contexts.Measurements do
     with {:ok, measurement_keys} <-
            Validators.validate_skin_fold_measurements(user, @default_method, attrs) do
       stats = SkinFold.calculate_folds(user, @default_method, attrs, measurement_keys)
-
-      measurement =
-        attrs
-        # |> Map.merge(diff)
-        |> Map.merge(stats)
-        |> Map.merge(%{user_id: user.id})
-        |> Map.put(:method, @default_method)
-
-      SkinFoldStore.create(measurement)
+      SkinFoldStore.create_skin_fold_with_weight(attrs, stats, user, @default_method)
     end
   end
 end

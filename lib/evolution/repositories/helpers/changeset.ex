@@ -56,4 +56,11 @@ defmodule Evolution.Repositories.Helpers.Changeset do
   end
 
   def password_changeset(changeset, _key), do: changeset
+
+  def default_today_measured_at(changeset, key \\ :measured_at) do
+    case get_field(changeset, key) do
+      nil -> put_change(changeset, key, Date.utc_today())
+      _ -> changeset
+    end
+  end
 end

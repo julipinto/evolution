@@ -58,6 +58,7 @@ defmodule Evolution.Core.Measurements.SkinFold do
   # takes an list in descending order of measurements and calculates the difference between each measurement
   def calculate_diffs(folds) when is_list(folds) do
     folds
+    |> Enum.map(&normalize_weight/1)
     |> Enum.with_index()
     |> Enum.map(fn {fold, index} ->
       if index == length(folds) - 1 do
@@ -69,13 +70,17 @@ defmodule Evolution.Core.Measurements.SkinFold do
     end)
   end
 
-  def add_nil_diffs(fold) do
+  defp normalize_weight(fold) do
+    Map.put(fold, :weight, fold.weight.value)
+  end
+
+  defp add_nil_diffs(fold) do
     Enum.reduce(@diff_fields, fold, fn field, acc ->
       Map.put(acc, :"#{field}_diff", nil)
     end)
   end
 
-  def add_diffs(current_fold, previews_fold) do
+  defp add_diffs(current_fold, previews_fold) do
     Enum.reduce(@diff_fields, current_fold, fn field, acc ->
       Map.put(acc, :"#{field}_diff", safe_subtract(current_fold[field], previews_fold[field]))
     end)

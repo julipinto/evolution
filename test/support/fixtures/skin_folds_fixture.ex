@@ -4,10 +4,19 @@ defmodule Evolution.Fixtures.SkinFoldsFixture do
   """
   alias Evolution.Repo
   alias Evolution.Repositories.Measurements.SkinFold
+  alias Evolution.Fixtures.WeightFixture
 
   def create_skin_folds(user_id, attrs \\ %{}) do
+    weight_value = Map.get(attrs, :weight, 75.5)
+
+    weight_attrs =
+      attrs
+      |> Map.take([:measured_at])
+      |> Map.put(:value, weight_value)
+
+    weight = WeightFixture.create_weight(user_id, weight_attrs)
+
     %{
-      weight: 75.5,
       triceps_fold: 12.4,
       biceps_fold: 8.3,
       abdominal_fold: 18.7,
@@ -26,6 +35,7 @@ defmodule Evolution.Fixtures.SkinFoldsFixture do
       method: "Jackson-Pollock 7-Site",
       measured_at: ~D[2025-02-14],
       measured_by: "John Doe",
+      weight_id: weight.id,
       user_id: user_id
     }
     |> Map.merge(attrs)
