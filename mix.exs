@@ -54,7 +54,8 @@ defmodule Evolution.MixProject do
       {:ecto_sqlite3, "~> 0.17"},
       {:bcrypt_elixir, "~> 3.0"},
       {:guardian, "~> 2.3"},
-      {:excoveralls, "~> 0.18", only: :test}
+      {:excoveralls, "~> 0.18", only: :test},
+      {:cors_plug, "~> 3.0"},
     ]
   end
 

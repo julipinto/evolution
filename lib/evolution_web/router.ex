@@ -4,7 +4,9 @@ defmodule EvolutionWeb.Router do
   alias EvolutionWeb.Plugs.Auth
 
   pipeline :api do
+    plug CORSPlug
     plug :accepts, ~w(json)
+
   end
 
   pipeline :auth do
